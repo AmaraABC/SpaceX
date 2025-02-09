@@ -7,7 +7,7 @@ import axios from 'axios';
 
 // Fonction qui interroge l'API SpaceX
 async function fetchAPI() {
-  // Tentative d'interaction avec l'API SpaceX V5
+  // Tentative d'interaction avec l'API SpaceX v5
     try {
     const response = await axios.get('https://api.spacexdata.com/v5/launches');
     return response.data;
