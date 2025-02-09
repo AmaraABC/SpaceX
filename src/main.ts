@@ -15,5 +15,4 @@ async function fetchAPI() {
     console.error('Erreur lors de la récupération des lancements de l\'entreprise SpaceX:', error);
   }
 }
-
 createApp(App).mount('#app')
