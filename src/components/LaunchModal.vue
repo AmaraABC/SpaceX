@@ -2,18 +2,18 @@
 <template>
     <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div class="bg-white p-6 rounded-lg">
-        <h2>{{ launch.name }}</h2>
-        <p>{{ new Date(launch.date_utc).toLocaleDateString() }}</p>
-        <p>{{ launch.details }}</p>
-        <img :src="launch.links.patch.small" alt="Launch Image" />
+        <h2 v-if="launch">{{ launch.name }}</h2>
+        <p v-if="launch">{{ new Date(launch.date_utc).toLocaleDateString() }}</p>
+        <p v-if="launch">{{ launch.details }}</p>
+        <img v-if="launch" :src="launch.links.patch.small" alt="Launch Image" />
         <p>
-            <a :href="launch.links.article" target="_blank" rel="noopener noreferrer">En savoir plus</a>
+            <a v-if="launch" :href="launch.links.article" target="_blank" rel="noopener noreferrer">En savoir plus</a>
         </p>
         
         <div>
           <input type="checkbox" v-model="showVideo" /> Afficher la vidéo
           <div v-if="showVideo">
-            <iframe :src="'https://www.youtube.com/embed/' + launch.links.youtube_id"
+            <iframe v-if="launch" :src="'https://www.youtube.com/embed/' + launch.links.youtube_id"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
@@ -21,9 +21,9 @@
           </div>
         </div>
         
-        <p>Site du lancement: {{ launch.launch_site.site_name }}</p>
+        <p v-if="launch">Site du lancement: {{ launch.launch_site.site_name }}</p>
         
-        <div>
+        <div v-if="launch">
           <p v-for="payload in launch.payloads" :key="payload.id">Charge explosive: {{ payload.name }}</p>
           <p v-for="customer in launch.customers" :key="customer">Clients: {{ customer }}</p>
         </div>
@@ -62,19 +62,19 @@ interface LaunchProps {
 }
   
 const props = defineProps<{
-    launch: LaunchProps; // Type explicite pour 'launch'
+    launch: LaunchProps | null;
     showModal: Boolean;
 }>();
   
 const showVideo = ref(false);
   
 const closeModal = () => {
-    emit('close'); // Émet l'événement pour fermer le modal
+    emit('close');
 };
   
 const emit = defineEmits(['close']);
 </script>
-  
+
   
   
   
